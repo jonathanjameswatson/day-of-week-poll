@@ -3,9 +3,9 @@
  * and registration.
  */
 
-export const AWW_COMMAND = {
-  name: 'awwww',
-  description: 'Drop some cuteness on this channel.',
+export const DOTW_COMMAND = {
+  name: 'dotw',
+  description: 'Add a poll for a day of the week',
 };
 
 export const INVITE_COMMAND = {

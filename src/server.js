@@ -8,8 +8,7 @@ import {
   InteractionType,
   verifyKey,
 } from 'discord-interactions';
-import { AWW_COMMAND, INVITE_COMMAND } from './commands.js';
-import { getCuteUrl } from './reddit.js';
+import { DOTW_COMMAND, INVITE_COMMAND } from './commands.js';
 import { InteractionResponseFlags } from 'discord-interactions';
 
 class JsonResponse extends Response {
@@ -32,6 +31,34 @@ const router = AutoRouter();
 router.get('/', (request, env) => {
   return new Response(`👋 ${env.DISCORD_APPLICATION_ID}`);
 });
+
+const daysOfTheWeek = [
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
+];
+
+const data = {
+  poll: {
+    question: {
+      text: 'Choose days of the week',
+    },
+    answers: daysOfTheWeek.map((day, i) => {
+      return {
+        answer_id: i + 1,
+        poll_media: {
+          text: day,
+        },
+      };
+    }),
+    duration: 7 * 24,
+    allow_multiselect: true,
+  },
+};
 
 /**
  * Main route for all requests sent from Discord.  All incoming messages will
@@ -58,13 +85,10 @@ router.post('/', async (request, env) => {
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
     // Most user commands will come as `APPLICATION_COMMAND`.
     switch (interaction.data.name.toLowerCase()) {
-      case AWW_COMMAND.name.toLowerCase(): {
-        const cuteUrl = await getCuteUrl();
+      case DOTW_COMMAND.name.toLowerCase(): {
         return new JsonResponse({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: {
-            content: cuteUrl,
-          },
+          data,
         });
       }
       case INVITE_COMMAND.name.toLowerCase(): {

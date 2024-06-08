@@ -1,7 +1,7 @@
 {
-  "name": "awwbot",
+  "name": "day-of-the-week-poll",
   "version": "1.0.0",
-  "description": "A simple discord bot that uses intents to post pictures from r/aww",
+  "description": "A simple discord bot that polls a day of the week",
   "type": "module",
   "private": true,
   "main": "src/server.js",
